@@ -6,7 +6,8 @@ Taking notes of intersting stuff that I learn and summary of solutions to differ
 
 ---
 <br/>
-## NVIDIA, CUDA, CUDNN, and TensorFlow:
+
+##  NVIDIA, CUDA, CUDNN, and TensorFlow:
 
 * https://stackoverflow.com/questions/41402409/tensorflow-doesnt-seem-to-see-my-gpu
 * https://medium.com/@exesse/cuda-10-1-installation-on-ubuntu-18-04-lts-d04f89287130
@@ -71,6 +72,7 @@ sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 
 ---
 <br/>
+
 ## Sysnaptic Touchpad
 To check if the Kernel sees the device do: 
 
