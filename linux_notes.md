@@ -275,8 +275,98 @@ https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcu
 ----
 <br />
 
+## SSH for Github
+
+You need to create an SSH key pair, and then add your public key to your Github account. Then you can use `git@githbu.com:zardosht/repo_name.git` URL to push and pull. 
+
+No need to enter username and password. 
+
+The keys have by default the name `id_rsa` for private key and `id_rsa.pub` for the public key. If you have multiple key pairs, you need to name them accordingly. 
+
+**Listing the key pairs** 
+```
+$ ls -al ~/.ssh/
+```
 
 
+**Generating new key pair and add it to the `ssh-agent`**
+
+```
+$ ssh-keygen -t rsa -b 4096 -C "zhodaie@gmail.com"
+```
+The `-C` option is for setting the comment (but I think it some how also associates your key to your Github account)
+
+Then enter the name for the key, and the pass phrase used to encrypt. You need this pass phrase any time you use the key, unless you add the to the SSH agent. 
+
+**Add the private key to `ssh-agent`**
+So that you don't have to type the pass phrase everytime you use the key.
+
+```
+$ eval "$(ssh-agent -s)"
+> Agent pid 59566
+
+$ ssh-add ~/.ssh/<key name, e.g. github_id_rsa>
+```
+
+*From the `man` page*: `ssh-agent` is a program to hold private keys used for public key authentication (RSA, DSA, ECDSA, Ed25519).  `ssh-agent` is usually started in the beginning of an X-session or a login session, and all other windows or programs are started as clients to it. The agent initially does not have any private keys.  Keys are added using `ssh(1)` (see `AddKeysToAgent` in `ssh_config`(5) for details) or `ssh-add(1)`.  Multiple identities may be stored in `ssh-agent` concurrently and `ssh`(1) will automatically use them if present.  `ssh-add(1)` is also used to remove keys from `ssh-agent` and to query the keys that are held in one.
+
+See the note about how SSH selects a key when logging in (it actually does not select any, in searches all the keys [https://superuser.com/questions/1067419/how-does-ssh-choose-the-correct-key-to-use](https://superuser.com/questions/1067419/how-does-ssh-choose-the-correct-key-to-use)). 
+
+**Add the SSH public key to your Github account**
+```
+$ sudo apt-get install xclip
+# Downloads and installs xclip. If you don't have `apt-get`, you might need to use another installer (like `yum`)
+
+$ xclip -sel clip < ~/.ssh/id_rsa.pub
+# Copies the contents of the id_rsa.pub file to your clipboard
+```
+then go to your `Github profile settings > SSH and GPG keys`, add a new SSH key and paste the copied public key and save the settings. 
+
+
+**Test the connection** 
+
+```
+$ ssh -T git@github.com
+# Attempts to ssh to GitHub
+
+```
+
+You see the warining: 
+
+```
+> The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+> RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+> Are you sure you want to continue connecting (yes/no)?
+```
+or 
+
+```
+> The authenticity of host 'github.com (IP ADDRESS)' can't be established.
+> RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+> Are you sure you want to continue connecting (yes/no)?
+```
+Verify that the fingerprint you your message matches the above fingerprints and answer with `yes`. 
+
+You will see: 
+```
+> Hi username! You've successfully authenticated, but GitHub does not
+> provide shell access.
+```
+
+**Adding or changing a passphrase**
+You can change the passphrase for an existing private key without regenerating the keypair by typing the following command:
+
+```
+$ ssh-keygen -p
+# Start the SSH key creation process
+> Enter file in which the key is (/Users/you/.ssh/id_rsa): [Hit enter]
+> Key has comment '/Users/you/.ssh/id_rsa'
+> Enter new passphrase (empty for no passphrase): [Type new passphrase]
+> Enter same passphrase again: [One more time for luck]
+> Your identification has been saved with the new passphrase.
+```
+
+If your key already has a passphrase, you will be prompted to enter it before you can change to a new passphrase.
 
 ----
 <br />
