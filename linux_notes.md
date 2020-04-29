@@ -6,7 +6,8 @@ Taking notes of intersting stuff that I learn and summary of solutions to differ
 
 ---
 <br/>
-## NVIDIA, CUDA, CUDNN, and TensorFlow:
+
+##  NVIDIA, CUDA, CUDNN, and TensorFlow:
 
 * https://stackoverflow.com/questions/41402409/tensorflow-doesnt-seem-to-see-my-gpu
 * https://medium.com/@exesse/cuda-10-1-installation-on-ubuntu-18-04-lts-d04f89287130
@@ -71,6 +72,7 @@ sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 
 ---
 <br/>
+
 ## Sysnaptic Touchpad
 To check if the Kernel sees the device do: 
 
@@ -115,7 +117,7 @@ xinput set-int-prop 12 334 8 1
 To make the options persistent, change the `/usr/share/X11/xorg.conf.d/40-libinput.conf` file, and add the corresponding options to the following section: 
 
 ```
-# == ATENTION == Both option name and the value must be in quotation marks. 
+#### == ATENTION == Both option name and the value must be in quotation marks. 
 Section "InputClass"
         Identifier "libinput touchpad catchall"
         MatchIsTouchpad "on"
@@ -133,6 +135,7 @@ add the configuration lines (e.g. `xinput set-int-prop 12 334 8 1`) to your `~/.
 
 ---
 <br />
+
 ## APT and `apt`
 * APT: Advanced Packaging Tool
 
@@ -152,6 +155,7 @@ add the configuration lines (e.g. `xinput set-int-prop 12 334 8 1`) to your `~/.
 
 ---
 <br />
+
 ## X Window System, X.Org Server
 
 * XFree86
@@ -176,6 +180,7 @@ add the configuration lines (e.g. `xinput set-int-prop 12 334 8 1`) to your `~/.
 
 ---
 <br />
+
 ## Virtual Terminal (VT) == Virtual Console (VC)
 
 * [https://en.wikipedia.org/wiki/Virtual_console](https://en.wikipedia.org/wiki/Virtual_console)
@@ -183,6 +188,7 @@ add the configuration lines (e.g. `xinput set-int-prop 12 334 8 1`) to your `~/.
 
 ----
 <br />
+
 ## Ubuntu Snaps
 * `snap list`     ;      `snap info <snap_name>`
 * Interfaces, Plugs, Slots: `snap connections <snap_name>`
@@ -192,6 +198,7 @@ add the configuration lines (e.g. `xinput set-int-prop 12 334 8 1`) to your `~/.
 
 ----
 <br />
+
 ## Printer and Scanner (Brother DCP 7055w)
 
 * The primary mechanism for Ubuntu printing and print services is the **Common UNIX Printing System** (**CUPS**). [https://en.wikipedia.org/wiki/CUPS](https://en.wikipedia.org/wiki/CUPS) -- [https://help.ubuntu.com/lts/serverguide/cups.html](https://help.ubuntu.com/lts/serverguide/cups.html)
@@ -216,6 +223,7 @@ sudo systemctl start cups
 
 ----
 <br />
+
 ## Seeing information about active processes
 
 * `ps`: displays information about a selection of the active processes.  
@@ -228,6 +236,7 @@ sudo systemctl start cups
 
 ----
 <br />
+
 ## `vim`
 
 #### Difference `vi` and `vim`
