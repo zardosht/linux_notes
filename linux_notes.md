@@ -22,7 +22,7 @@ sudo apt remove --auto-remove cuda*
 sudo apt purge nvidia*
 sudo apt pruge cuda*
 ```
-* Add the repositorie if not added 
+* Add the repository if not added 
 
 ```bash
 sudo apt update
@@ -60,7 +60,7 @@ $ nvidia-smi
 $ nvcc --version
 ```
 
-* instll tensorflow: `pip install tensorflow==<the version you want>`
+* install Tensorflow: `pip install tensorflow==<the version you want>`
 
 * check that TF sees the GPU: in Python console: 
 
@@ -70,10 +70,18 @@ tf.test.is_gpu_available()
 sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 ```
 
+
+* **Useful commands for troubleshooting:**
+
+```
+ubuntu-drivers
+
+```
+
 ---
 <br/>
 
-## Sysnaptic Touchpad
+## Synaptic Touchpad
 To check if the Kernel sees the device do: 
 
 ```
@@ -112,12 +120,12 @@ xinput set-int-prop <device> <property> <format (8, 16, 32)> <val> [<val> ...]
 xinput set-int-prop 12 334 8 1
 ```
 
-#### Makeing the options persistent: 
+#### Making the options persistent: 
 
 To make the options persistent, change the `/usr/share/X11/xorg.conf.d/40-libinput.conf` file, and add the corresponding options to the following section: 
 
 ```
-#### == ATENTION == Both option name and the value must be in quotation marks. 
+#### == ATTENTION == Both option name and the value must be in quotation marks. 
 Section "InputClass"
         Identifier "libinput touchpad catchall"
         MatchIsTouchpad "on"
@@ -160,7 +168,7 @@ add the configuration lines (e.g. `xinput set-int-prop 12 334 8 1`) to your `~/.
 
 * XFree86
 * X11 == X Window System; The X protocol has been at version 11 (hence "X11") since September 1987
-* X.Org System: thre reference implementation of X11
+* X.Org System: the reference implementation of X11
 * X is an architecture-independent system for remote graphical user interfaces and input device capabilities. Each person using a networked terminal has the ability to interact with the display with any type of user input device.
 * Unlike most earlier display protocols, X was specifically designed to be used over network connections rather than on an integral or attached display device. X features network transparency, which means an X program running on a computer somewhere on a network (such as the Internet) can display its user interface on an X server running on some other computer on the network. The X server is typically the provider of graphics resources and keyboard/mouse events to X clients, meaning that the X server is usually running on the computer in front of a human user, while the X client applications run anywhere on the network and communicate with the user's computer to request the rendering of graphics content and receive events from input devices including keyboards and mice.
 * The fact that the term "server" is applied to the software in front of the user is often surprising to users accustomed to their programs being clients to services on remote computers. Here, rather than a remote database being the resource for a local app, the user's graphic display and input devices become resources made available by the local X server to both local and remotely hosted X client programs who need to share the user's graphics and input devices to communicate with the user.
@@ -371,17 +379,162 @@ If your key already has a passphrase, you will be prompted to enter it before yo
 ----
 <br />
 
+## REISUB - magic SysRq key
+
+https://en.wikipedia.org/wiki/Magic_SysRq_key
+
+Magic SysRq key sequence for safely rebooting: 
+
+`REISUB`: (to remember says the sequence)
+
+* un**R**aw (take control of keyboard back from X),
+* t**E**rminate (send SIGTERM to all processes, allowing them to terminate gracefully),
+* k**I**ll (send SIGKILL to all processes except init, forcing them to terminate immediately),
+* **S**ync (flush data to disk),
+* **U**nmount (remount all filesystems read-only),
+* re**B**oot.
+
+
+Press `Alt+SysRq` or `Fn + Alt + SysRq` or `Print Screen` if you don't have `SysRq`. 
+
+Hold `Alt`, and press different commands (see table below). 
+
+
+| Action	| QWERTY  |
+|---------------|---------|
+| Set the console log level, which controls the types of kernel messages that are output to the console	| 0 - 9 |
+| Immediately reboot the system, without unmounting or syncing filesystems  |	 b |
+| Perform a system crash. A crashdump will be taken if it is configured.|	c |	
+| Display all currently held Locks (CONFIG_LOCKDEP kernel option is required)|	d |
+|Send the SIGTERM signal to all processes except init (PID 1) |	e |
+|Call oom_kill, which kills a process to alleviate an OOM condition	| f |	
+| When using Kernel Mode Setting, switch to the kernel's framebuffer console. <br />If the in-kernel debugger kdb is present, enter the debugger.	| g| 
+|Output a terse help document to the console <br />Any key which is not bound to a command should also perform this action	| h	|
+| Send the SIGKILL signal to all processes except init	| i |	
+| Forcibly "Just thaw it" – filesystems frozen by the FIFREEZE ioctl. |	j |
+| Kill all processes on the current virtual console (can kill X and SVGALib programs)<br /> This was originally designed to imitate a secure attention key	 | k	|
+|Shows a stack backtrace for all active CPUs.	| l |
+|Output current memory information to the console	m|
+|Reset the nice level of all high-priority and real-time tasks	|n|
+|Shut off the system	|o|
+|Output the current registers and flags to the console	|p|
+Display all active high-resolution timers and clock sources.	|q|
+|Switch the keyboard from raw mode, used by programs such as X11 and SVGALib, to XLATE mode	|r|
+|Sync all mounted filesystems	|s|
+|Output a list of current tasks and their information to the console	|t|
+|Remount all mounted filesystems in read-only mode	|u|
+|Forcefully restores framebuffer console.<br />
+For ARM processors, cause ETM buffer dump instead.	|v|
+|Display list of blocked (D state) tasks	|w|
+|Used by xmon interface on PowerPC platforms. Disables lockdown (Secure Boot restrictions) on some kernels.	|x|
+|Show global CPU registers (SPARC-64 specific)	|y|
+|Dump the ftrace buffer	|z|
+|Print a summary of available magic SysRq keys	|space|	
+
 
 ----
 <br />
 
+## Prevent Apache from Starting at boot
+
+Disable and stop: 
+* `sudo systemctl disable apache2` 
+* `sudo systemctl stop apache2`
+  
+Test:
+  * `systemctl is-active apache2.service`, 
+  * `systemctl is-enabled apache2.service `
 
 ----
 <br />
 
+## Networking 
+
+* `ifconfig, ifup, ifdown` : for configuring and starting/stopping network interfaces
+* `/etc/network/interfaces` : network interface configuration file (might not have all interfaces depending on if you have installed Network Manager)
+* `network-manager, nmcli, nmtui` : the Network Manager (https://wiki.debian.org/NetworkManager). A program to make network configuration simpler
+  * `/etc/NetworkManager/system-connections` : folder containing connection information/configuration for each network manager connection
+  * the meaning of settings in `man nm-settings` : settings in configuration files
+  * if changed a setting you man need to restart the nm deamon `sudo /etc/init.d/network-manager restart`
+  * `nm-connection-editor` : can be used to edit netowork manager configuration
+  * `/etc/NetworkManager/NetworkManager.conf` : contains network manager configs
+
+* `nslookup`, `dig` : ns look-up utilitiies
+* `systemd-resolve --status` : print status information system service for resolving names (DNS, services, ....)
+  * `sudo systemctl status systemd-resolved.service`  : similar to the above
+  * `resolvconf` manages nameserver information
+  * `/etc/resolv.conf`(a symlink to one of the other files): `/run/systemd/resolve/resolv.conf` and `/run/resolvconf/resolv.conf`
+  * also this file maybe interesting `/etc/systemd/resolved.conf `
+
+If you have problems with the DNS resolutions for some hosts, do the following: 
+
+(https://www.linode.com/community/questions/17081/dns-stops-resolving-on-ubuntu-1804, <br/>
+https://askubuntu.com/questions/966870/dns-not-working-after-upgrade-17-04-to-17-10, <br/> 
+https://wiki.archlinux.org/index.php/Systemd-resolved, <br/> 
+https://en.wikipedia.org/wiki/Resolvconf, <br />
+https://askubuntu.com/questions/1012641/dns-set-to-systemds-127-0-0-53-how-to-change-permanently, <br />
+https://archive.fosdem.org/2019/schedule/event/dns_systemd_resolved/, <br />
+https://wiki.archlinux.org/index.php/Systemd-networkd, <br />
+)
+
+```bash
+$ sudo rm /etc/resolv.conf
+$ sudo ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
+$ systemctl restart resolvconf
+```
+
+  
+
 
 ----
 <br />
+
+## SystemD
+
+* `systemctl` : Control the systemd system and service manager
+* `systemctl --all | grep -i --context=10 apache`
+* `systemctl is-enabled apache2`
+* `systemctl status <service-name>`
+
+* `service`: runs a _System V_ init script.
+  * `service --status-all`
+
+![SystemD Components](./images/systemd_components.webp)
+
+One of the most fundamental distinctions in modern Linux systems is whether they use SystemV or Systemd. Here are the main differences between the two.
+
+1. SystemV is older, and goes all the way back to original Unix.
+2. SystemD is the new system that many distros are moving to.
+3. SystemD was designed to provide faster booting, better dependency management, and much more.
+4. SystemD handles startup processes through `.service` files.
+5. SystemV handles startup processes through shell scripts in `/etc/init*`.
+
+#### Indicators
+If you’re starting and stopping things using `systemctl restart sshd`, etc, you’re on a SystemD system.
+
+If you’re starting and stopping things using `/etc/init.d/sshd start`, etc, you’re on a SystemV system.
+
+
+#### Which distros use which?
+Many older versions of SystemD distros were SystemV.
+
+Here’s an incomplete but hopefully useful breakdown of which distros are on which system.
+
+* Systemd: Amazon Linux, Red Hat Enterprise, CentOS, Fedora, Debian/Ubuntu/Mint
+
+* SystemV: Gentoo, Alpine, Slackware, Linux from Scratch
+
+Notes
+There are other startup systems as well, such as Upstart and BSD.
+
+https://danielmiessler.com/study/the-difference-between-system-v-and-systemd/ <br />
+https://en.wikipedia.org/wiki/Systemd <br /> 
+https://en.wikipedia.org/wiki/UNIX_System_V <br />
+https://www.freedesktop.org/wiki/Software/systemd/ <br />
+
+
+
+
 
 ----
 <br />
